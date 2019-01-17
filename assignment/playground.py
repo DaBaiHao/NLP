@@ -1,3 +1,4 @@
+# import tree bank
 import nltk
 
 nltk.download('treebank')
@@ -6,14 +7,37 @@ nltk.download('universal_tagset')
 from nltk.corpus import treebank
 
 tagged_sentences = treebank.tagged_sents(tagset='universal')
+'''
+We now have the sentences tagged with universal tagset, the universal tagset has 12
+    distinct tags:
+        ● VERB - verbs (all tenses and modes)
+        ● NOUN - nouns (common and proper)
+        ● PRON - pronouns
+        ● ADJ - adjectives
+        ● ADV - adverbs
+        ● ADP - adpositions (prepositions and postpositions)
+        ● CONJ - conjunctions
+        ● DET - determiners
+        ● NUM - cardinal numbers
+        ● PRT - particles or other function words
+        ● X - other: foreign words, typos, abbreviations
+        ● . - punctuation
+'''
 
+# The sentences are stored as lists of token, PoS tag pairs, we can take a look at the first
 print(tagged_sentences[0])
+
+#  prepare the data for building our model
 
 print(len(tagged_sentences))
 
+# assess the performance of our trained model
+# we need to create a test set
 train = tagged_sentences[:3000]
 test = tagged_sentences[3000:]
 
+# map the actual tokens and tags into integers.
+# First let’s create a dictionary for tags
 tagset = set([tag for sent in tagged_sentences for token,tag in sent])
 tag2ids = {tag:id for id,tag in enumerate(tagset)}
 
