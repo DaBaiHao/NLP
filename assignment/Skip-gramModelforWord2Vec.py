@@ -80,6 +80,27 @@ for each_words in normalized_corpus:
             idx2word.append(each_word)
         else:
             word2idx[each_word] += 1
-print(word2idx)
+
+
+sents_as_ids = list()
+count_num = 0
+for each_words in normalized_corpus:
+    sents_as_ids.append([])
+    for each_word in each_words:
+        index = idx2word.index(each_word)
+        sents_as_ids[count_num].append(index)
+    count_num += 1
+
+print('\nSample word2idx: ', list(word2idx.items())[:10])
+
 print(len(word2idx))
 print(len(idx2word))
+print('\nSample word2idx: ', list(word2idx.items())[:10])
+print('\nSample normalized corpus:', normalized_corpus[:3])
+print('\nAbove sentence as a list of ids:' , sents_as_ids[:3])
+print(len(sents_as_ids))
+
+
+# training
+from keras.preprocessing.sequence import skipgrams
+skip_grams = [skipgrams(sent, vocabulary_size=vocab_size, window_size=5) for sent in sents_as_ids]
